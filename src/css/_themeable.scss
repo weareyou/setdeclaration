@@ -1,0 +1,11 @@
+/**
+ * Import everything which can be themed (now or in the future). This file
+ * should be imported after defining the overrides to the styles.
+ */
+
+@import
+	"04-elements/body",
+	"04-elements/main";
+
+@import
+	"06-components/example";

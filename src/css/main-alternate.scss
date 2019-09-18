@@ -1,0 +1,18 @@
+@import "non-themeable";
+
+$c-example-override: (
+	align-items: center,
+	display: flex,
+
+	__image: (
+		margin-right: 2em,
+		margin-bottom: $SKIP_DECLARATION,
+		width: 200px
+	),
+
+	__text: (
+		font-family: 'Consolas, console, monospace'
+	)
+);
+
+@import "themeable";

@@ -1,0 +1,41 @@
+/**
+ * Converts the provided string into a list. The string is split on the
+ * specified separator and each part becomes an item in the list.
+ *
+ * @param {string} $string The string to convert to a list.
+ * @param {string} $separator The character to use to split the
+ *        provided string.
+ *
+ * @returns {list} The result of the function is a SASS list.
+ *
+ * @see {@link https://stackoverflow.com/a/42295154/1244780}
+ *
+ * @example
+ * // Splits the input string on the '.' character.
+ * str-split('this.is.an.example', '.') => ('this', 'is', 'an', 'example')
+ * // Split also works when the separator doesn't exist.
+ * str-split('test', '.') => ('test')
+ */
+@function str-split($string, $separator) {
+	// empty array/list
+	$split-arr: ();
+	// first index of separator in string
+	$index: str-index($string, $separator);
+
+	// loop through string
+	@while $index !=null {
+		// get the substring from the first character to the separator
+		$item: str-slice($string, 1, $index - 1);
+		// push item to array
+		$split-arr: append($split-arr, $item);
+		// remove item and separator from string
+		$string: str-slice($string, $index + 1);
+		// find new index of separator
+		$index: str-index($string, $separator);
+	}
+
+	// add the remaining string to list (the last item)
+	$split-arr: append($split-arr, $string);
+
+	@return $split-arr;
+}

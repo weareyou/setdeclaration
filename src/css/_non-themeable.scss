@@ -1,0 +1,18 @@
+/**
+ * Import everything which can't be themed. In ITCSS this will typically be
+ * everything up to the generic layer. This file should be imported in your
+ * style before defining overrides for the styling.
+ */
+@import
+	"01-settings/constants";
+
+@import
+	"02-tools/functions/get-last-list-entry",
+	"02-tools/functions/get-split-array",
+	"02-tools/functions/map-get-next",
+	"02-tools/functions/recursive-merge",
+
+	"02-tools/mixins/set-declaration";
+
+@import
+	"03-generic/box-sizing";

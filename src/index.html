@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+	<!-- partial:partials/generic/_head.html -->
+	<!-- partial -->
+	<title>Index</title>
+</head>
+<body style="padding: 2em;">
+	<main>
+		<div class="c-example">
+			<img class="c-example__image" src="img/futurama.gif" alt="">
+			<div class="c-example__text">We can now easily theme pages</div>
+		</div>
+
+		<a id="show-alternate" href="">Show alternative</a>
+	</main>
+
+	<script>
+			const
+				params = new URLSearchParams(window.location.search),
+				theme = params.get('alternate') || '',
+				useAlternate = (theme !== '');
+
+			if (useAlternate) {
+				const
+					link = document.querySelector('#stylesheet'),
+					href = `/css/main-alternate.css`;
+				link.href = href;
+			}
+
+			const
+				showAlternate = document.querySelector('#show-alternate');
+			showAlternate.href = (useAlternate)
+				? '/'
+				: '/?alternate=1';
+	</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+/**
+ * Returns the last entry from the list.
+ *
+ * @param {list} $list The list for which to return the last value
+ *
+ * @returns {any} The last item from the provided list is returned.
+ *
+ * @see {@link https://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/}
+ *
+ * @example
+ * last('a', 'b', 'c', 'd', 'e') => 'e'
+ */
+@function last($list) {
+	@return nth($list, length($list));
+}

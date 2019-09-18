@@ -1,0 +1,61 @@
+/**
+ * Writes a property declaration to the stylesheet based on a map with
+ * configuration settings, optional overrides for the settings and a path
+ * to find the the value in nested maps. It is possible to instruct the
+ * mixin not to write the declaration by assigning the value 'skip' to the
+ * map value.
+ *
+ *
+ * @param {map} $defaults A map with the default configuration values.
+ * @param {map} $overrides A map with overrides which should be applied
+ *        on top of the defaults. When there are no overrides this param
+ *        should have the value of null.
+ * @param {string} $path A string with the path of the property to set. This
+ *        string should use a '.' to nest the properties.
+ * @param {string} [$property=null] By default the last path part will be
+ *        used as the property name to declare. This param can be used to
+ *        specify an alternate property name. Leave the value to null to
+ *        use the last path part as the property name.
+ *
+ * @example
+ * setDeclaration((color: #000), null, 'color') => color: #000;
+ * setDeclaration((color: #000), (color: #fff), 'color') => color: #fff;
+ * setDeclaration((header: (color: #000)), null, 'header.color' ) => color: #000;
+ * setDeclaration((color: skip)), null, 'color' ) => <no output>;
+ */
+ @mixin setDeclaration($defaults, $overrides, $path, $property: null) {
+	// Initialize the value property with the defaults map.
+	$value: $defaults;
+	// Create a list of the path so we know which maps we need to get.
+	$parts: str-split($path, '.');
+
+	// Check if there are overrides, when there are merge the overrides
+	// with the default values.
+	@if $overrides != null {
+		$value: non-destructive-map-merge($defaults, $overrides);
+	}
+
+	// Iterate over all the parts of the path. For each part check if the current
+	// map has a value. When there is a value, assign the map value to the value
+	// property so the current value is accessible when the @each…in has finished.
+	@each $part in $parts {
+		@if (map-get($value, $part) != null) {
+			$value: map-get($value, $part);
+		}
+	}
+
+	// Before we write the declaration we need to make sure value contains a valid
+	// value. The value is considered valid when the matches the following criteria:
+	// - Value must NOT be a map;
+	// - Value must NOT be null;
+	// - Value must NOT be a string with the variable '$SKIP_DECLARATION'.
+	@if type-of($value) != map and $value != null and $value != $SKIP_DECLARATION {
+		// Check if the 4th param has been provided. When it is use this as the
+		// property name instead of the last part of the path.
+		@if $property == null {
+			#{last($parts)}: #{$value};
+		} @else {
+			#{$property}: #{$value};
+		}
+	}
+}
