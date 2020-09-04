@@ -27,7 +27,7 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.1",
     "gulp-watch": "^5.0.1",
-    "node-sass": "^4.9.4",
+    "node-sass": "^4.13.1",
     "run-sequence": "^2.2.1",
     "webpack-merge": "^4.2.2",
     "webpack-stream": "^5.2.1",
